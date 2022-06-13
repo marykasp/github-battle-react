@@ -1,0 +1,18 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import "./index.css"
+
+// React Component - manages own state, lifecycle methods, renders/returns a React Element (JSX describes what UI looks like)
+class App extends React.Component {
+  render() {
+    // JSX - syntax extension of JS
+    return (
+      <div>
+        Hello World!
+      </div>
+    )
+  }
+}
+
+// Class components return a JSX React element, second argument is where to render the element to
+ReactDOM.render(<App />, document.getElementById('app'))
