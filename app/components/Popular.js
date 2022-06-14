@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import { fetchPopularRepos } from '../utils/api';
 
 // Functional Component - without Hooks can be used to be passed props and render a UI component
 function LanguagesNav({ selected, updateLanguage}) {
@@ -32,27 +33,62 @@ class Popular extends React.Component {
     super(props)
 
     this.state = {
-      selectedLanguage: "All"
+      selectedLanguage: "All",
+      repos: null,
+      error: null
     }
 
-    this.updateLanguage = this.updateLanguage.bind(this)
+    this.updateLanguage = this.updateLanguage.bind(this);
+    this.isLoading = this.isLoading.bind(this)
+  }
+
+  // will invoke the fetch request once teh component mounts
+  componentDidMount() {
+    this.updateLanguage(this.state.selectedLanguage)
   }
 
   // update local state of component - causes a re-render
   updateLanguage (selectedLanguage) {
     this.setState({
-      selectedLanguage
+      selectedLanguage,
+      repos: null,
+      error: null
     })
+
+    // make fetch request to Github API - returns an array of objects
+    fetchPopularRepos(selectedLanguage)
+      .then((repos) => this.setState({
+        repos,
+        error: null
+      }))
+      .catch(() => {
+        console.warn('Error fetching repos:', error)
+
+        this.setState({
+          error: 'There was an error fetching repositories'
+        })
+      })
+  }
+
+  isLoading() {
+    return this.state.repos === null
   }
 
   render() {
-
+    const {selectedLanguage, repos, error} = this.state
     return (
       <>
         <LanguagesNav
-          selected={this.state.selectedLanguage}
+          selected={selectedLanguage}
           updateLanguage={this.updateLanguage}
         />
+
+        {/* if the repos state is empty render this UI */}
+        {this.isLoading() && <p>Loading...</p>}
+
+        {error && <p>{error}</p>}
+
+        {repos && <pre>{JSON.stringify(repos, null, 2)}</pre>}
       </>
     )
   }
