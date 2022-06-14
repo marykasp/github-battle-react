@@ -9,7 +9,7 @@ class App extends React.Component {
     // JSX - syntax extension of JS
     return (
       <div className="container">
-       <Popular />
+        <Popular />
       </div>
     )
   }
