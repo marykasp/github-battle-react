@@ -42,8 +42,7 @@ class PlayerInput extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    // passs the state to a function
+    // passs the state to a function on Battle component
     this.props.onSubmit(this.state.username);
   }
 
@@ -88,11 +87,45 @@ PlayerInput.propTypes = {
 };
 
 export default class Battle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      playerOne: null,
+      playerTwo: null,
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(id, player) {
+    this.setState({
+      [id]: player,
+    });
+  }
+
   render() {
+    const { playerOne, playerTwo } = this.state;
     return (
       <>
         <Instructions />
-        <PlayerInput label="Label" onSubmit={(value) => console.log(value)} />
+        <div className="players-container">
+          <h1 className="center-texgt header-lg">Players</h1>
+          <div className="row space-around">
+            {/* render player input components */}
+            {playerOne === null && (
+              <PlayerInput
+                label="Player One"
+                onSubmit={(player) => this.handleSubmit("playerOne", player)}
+              />
+            )}
+            {playerTwo === null && (
+              <PlayerInput
+                label="Player Two"
+                onSubmit={(player) => this.handleSubmit("playerTwo", player)}
+              />
+            )}
+          </div>
+        </div>
       </>
     );
   }
