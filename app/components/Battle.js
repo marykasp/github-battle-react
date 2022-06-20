@@ -1,5 +1,11 @@
 import React from "react";
-import { FaUserFriends, FaFighterJet, FaTrophy, FaUser } from "react-icons/fa";
+import {
+  FaUserFriends,
+  FaFighterJet,
+  FaTrophy,
+  FaTimesCircle,
+  FaTimes,
+} from "react-icons/fa";
 import PropTypes from "prop-types";
 
 function Instructions() {
@@ -86,6 +92,35 @@ PlayerInput.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
+function PlayerPreview({ username, onReset, label }) {
+  return (
+    <div className="column player">
+      <h3 className="player-label">{label}</h3>
+      <div className="row bg-light">
+        <div className="player-info">
+          <img
+            src={`https://github.com/${username}.png?size=200`}
+            alt={`Avatar for ${username}`}
+            className="avatar-small"
+          />
+          <a href={`https://github.com/${username}`} className="link">
+            {username}
+          </a>
+        </div>
+        <button className="btn-clear flex-center" onClick={onReset}>
+          <FaTimesCircle size={26} color="rgb(194, 57, 42)" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+PlayerPreview.propTypes = {
+  username: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+};
+
 export default class Battle extends React.Component {
   constructor(props) {
     super(props);
@@ -94,7 +129,9 @@ export default class Battle extends React.Component {
       playerTwo: null,
     };
 
+    // bind is a method all functions have access to, first argument is the context in which you want the function to be invoked - sets where this keyword references
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleReset = this.handleReset.bind(this);
   }
 
   handleSubmit(id, player) {
@@ -103,7 +140,15 @@ export default class Battle extends React.Component {
     });
   }
 
+  // reset player one or player two so input will show up
+  handleReset(id) {
+    this.setState({
+      [id]: null,
+    });
+  }
+
   render() {
+    // destructure the state and props in the render method of class
     const { playerOne, playerTwo } = this.state;
     return (
       <>
@@ -111,17 +156,29 @@ export default class Battle extends React.Component {
         <div className="players-container">
           <h1 className="center-texgt header-lg">Players</h1>
           <div className="row space-around">
-            {/* render player input components */}
-            {playerOne === null && (
+            {/* render player input components if no username is entered in input or show player preview */}
+            {playerOne === null ? (
               <PlayerInput
                 label="Player One"
                 onSubmit={(player) => this.handleSubmit("playerOne", player)}
               />
+            ) : (
+              <PlayerPreview
+                username={playerOne}
+                label="Player One"
+                onReset={() => this.handleReset("playerOne")}
+              />
             )}
-            {playerTwo === null && (
+            {playerTwo === null ? (
               <PlayerInput
                 label="Player Two"
                 onSubmit={(player) => this.handleSubmit("playerTwo", player)}
+              />
+            ) : (
+              <PlayerPreview
+                label="Player Two"
+                username={playerTwo}
+                onReset={() => this.handleReset("playerTwo")}
               />
             )}
           </div>
