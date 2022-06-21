@@ -7,6 +7,7 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import PropTypes from "prop-types";
+import Results from "./Results";
 
 function Instructions() {
   return (
@@ -127,6 +128,7 @@ export default class Battle extends React.Component {
     this.state = {
       playerOne: null,
       playerTwo: null,
+      battle: false,
     };
 
     // bind is a method all functions have access to, first argument is the context in which you want the function to be invoked - sets where this keyword references
@@ -149,7 +151,12 @@ export default class Battle extends React.Component {
 
   render() {
     // destructure the state and props in the render method of class
-    const { playerOne, playerTwo } = this.state;
+    const { playerOne, playerTwo, battle } = this.state;
+
+    if (battle) {
+      return <Results playerOne={playerOne} playerTwo={playerTwo} />;
+    }
+
     return (
       <>
         <Instructions />
@@ -182,6 +189,14 @@ export default class Battle extends React.Component {
               />
             )}
           </div>
+          {playerOne && playerTwo && (
+            <button
+              className="btn dark-btn btn-space"
+              onClick={() => this.setState({ battle: true })}
+            >
+              Battle
+            </button>
+          )}
         </div>
       </>
     );
