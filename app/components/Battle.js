@@ -9,6 +9,7 @@ import {
 import PropTypes from "prop-types";
 import Results from "./Results";
 
+// Functional Component - show instructions for Github Battle
 function Instructions() {
   return (
     <div className="instructions-container">
@@ -35,6 +36,7 @@ function Instructions() {
   );
 }
 
+// Class Component - has input state that is used to fetch data about users
 class PlayerInput extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +51,7 @@ class PlayerInput extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    // passs the state to a function on Battle component
+    // pass the state to a function on Battle component
     this.props.onSubmit(this.state.username);
   }
 
@@ -153,8 +155,20 @@ export default class Battle extends React.Component {
     // destructure the state and props in the render method of class
     const { playerOne, playerTwo, battle } = this.state;
 
-    if (battle) {
-      return <Results playerOne={playerOne} playerTwo={playerTwo} />;
+    if (battle === true) {
+      return (
+        <Results
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+          onReset={() =>
+            this.setState({
+              playerOne: null,
+              playerTwo: null,
+              battle: false,
+            })
+          }
+        />
+      );
     }
 
     return (
