@@ -3,6 +3,7 @@ import { battle } from "../utils/api";
 import Card from "./Card";
 import ProfileList from "./ProfileList";
 import PropTypes from "prop-types";
+import Loading from "./Loading";
 
 // when component first mounts or renders call the battle fetch function - invokes Promise.all fetch requests to returns an object for each player containing profile info and score - since returning Promise.all returns a promise so need to call .then() to get the resolved value of the promise which is an array of objects
 export default class Results extends React.Component {
@@ -46,7 +47,7 @@ export default class Results extends React.Component {
     const { onReset } = this.props;
 
     if (loading === true) {
-      return <p>LOADING</p>;
+      return <Loading text="Battling" />;
     }
 
     if (error) {

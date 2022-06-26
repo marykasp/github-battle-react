@@ -8,6 +8,7 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import Card from "./Card";
+import Loading from "./Loading";
 
 // Functional Component - without Hooks can be used to be passed props and render a UI component
 function LanguagesNav({ selected, updateLanguage }) {
@@ -151,7 +152,7 @@ class Popular extends React.Component {
         />
 
         {/* if the repos state is empty render this UI */}
-        {this.isLoading() && <p>Loading...</p>}
+        {this.isLoading() && <Loading text="Fetching Repos" />}
 
         {error && <p className="center-text error">{error}</p>}
 
