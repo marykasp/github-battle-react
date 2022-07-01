@@ -20,6 +20,12 @@ li {
   list-style-type: none;
 }
 
+.dark {
+  color: #dadada;
+  background: #1c2022;
+  min-height: 100%;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -125,6 +131,11 @@ li {
   border-radius: 3px;
 }
 
+.bg-dark {
+  background: rgb(36, 40, 42);
+  border-radius: 3px;
+}
+
 /* Battle Instructions */
 .instructions-container {
   margin: 100px 0;
@@ -186,6 +197,11 @@ li {
   background: rgba(0, 0, 0, 0.02);
 }
 
+.player-inputs .input-dark {
+  color: #dadada;
+  background: rgba(0, 0, 0, 0.3);
+}
+
 .player-inputs button {
   flex: 1;
   margin-left: 10px;
@@ -211,9 +227,19 @@ li {
   background: #141414;
 }
 
+.light-btn {
+  background: #aaa8a8;
+  color: #000;
+}
+
 .dark-btn:disabled {
   background: #f2f2f2;
   color: #c7c7c7;
+}
+
+.light-btn:disabled {
+  background: #292929;
+  color: #4a4a4a;
 }
 
 .players-container {

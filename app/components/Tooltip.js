@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import withHover from "./withHover";
+import Hover from "./Hover";
 
 const styles = {
   container: {
@@ -25,12 +25,16 @@ const styles = {
 };
 
 // hovering prop is being passed from a Higher Order Component - able to reuse the hovering state then for multiple components
-function Tooltip({ text, children, hovering }) {
+function Tooltip({ text, children }) {
   return (
-    <div style={styles.container}>
-      {hovering && <div style={styles.tooltip}>{text}</div>}
-      {children}
-    </div>
+    <Hover>
+      {(hovering) => (
+        <div style={styles.container}>
+          {hovering && <div style={styles.tooltip}>{text}</div>}
+          {children}
+        </div>
+      )}
+    </Hover>
   );
 }
 
@@ -39,5 +43,4 @@ Tooltip.propTypes = {
   hovering: PropTypes.bool.isRequired,
 };
 
-// is passed a Component and a propName
-export default withHover(Tooltip, "hovering");
+export default Tooltip;
