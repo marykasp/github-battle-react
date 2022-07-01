@@ -52,6 +52,10 @@ li {
   font-family: "Roboto", sans-serif;
 }
 
+.nav li {
+  margin-right: 10px;
+}
+
 /* Repos grid */
 .grid {
   display: flex;
@@ -60,6 +64,10 @@ li {
 
 .space-around {
   justify-content: space-around;
+}
+
+.space-between {
+  justify-content: space-between;
 }
 
 .card {
